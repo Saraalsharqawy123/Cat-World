@@ -1,0 +1,31 @@
+
+
+<ion-content padding>
+    <ion-grid style="height: 100%; display: flex; flex-flow: column;">
+      <ion-row class="ion-align-items-end" style="margin:auto;">
+        <img style="width: 50%; margin:3% auto;" src="../../assets/icon.png" />
+        
+                <div>
+                    Cat World
+                </div>
+           
+        <form [formGroup]="myform" (submit)="Login(myform.value)">
+          <ion-item>
+            <ion-icon name="mail" slot="start"></ion-icon>
+            <ion-input  placeholder="Email Address" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"  [required]="true"  formControlName="email"></ion-input>
+          </ion-item>
+      
+          <ion-item>   
+            <ion-icon name="key" slot="start"></ion-icon>            
+            <ion-input placeholder="Password" type="password"   formControlName="password"  [required]="true"></ion-input>   
+          </ion-item>
+        
+          <ion-button  type="submit" class="btn"  [disabled]="!myform.valid"  expand="block" > Login </ion-button>
+        </form>
+
+        <span>
+          Don't have an account? <span><a routerLink="/register">Sign up </a></span>
+        </span>
+      </ion-row>
+    </ion-grid>
+</ion-content>

@@ -1,0 +1,128 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-button color="light" (click)="closeModal()">
+              <ion-icon name="arrow-back"></ion-icon>
+            </ion-button>
+      </ion-buttons>
+    <ion-title>Add cat</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <form [formGroup]="form" (submit)="AddCat(form.value)">  
+        <ion-item>           
+            <img [src]="base64Image" *ngIf="base64Image"  />
+<ion-col size="4">
+          <ion-label> Image </ion-label>   
+        </ion-col>
+
+        <ion-col>
+                    <ion-button expand="block"  fill="outline" (click)="AccessGallery()">
+              
+                Gallery
+              <ion-icon name="image" slot="start"> </ion-icon>
+            
+             </ion-button>        
+             <ion-input type="hidden" formControlName="img"  [required]="true" [value]="base64Image"></ion-input>
+           <!-- <ion-input type="text" formControlName="img"  [required]="true"></ion-input>   
+          -->
+        </ion-col>
+
+          </ion-item>
+           
+             <ion-item>           
+                <ion-label> Type </ion-label>
+                    <ion-select   [required]="true" interface="popover" placeholder="Choose One" 
+                    formControlName="type" >
+                      <ion-select-option *ngFor="let t of types" value="{{t}}" >{{t}}</ion-select-option>
+                      
+                    
+                    
+                    </ion-select> 
+              
+                </ion-item>
+              
+      
+             <ion-item>
+              <ion-label> age </ion-label>  
+             
+                  <ion-select   [required]="true" interface="popover" placeholder="Choose One" 
+                  formControlName="age" >
+                    <ion-select-option *ngFor="let a of ages" value="{{a}}" >{{a}}</ion-select-option>
+                    
+                  
+                  
+                  </ion-select>
+              </ion-item>
+          
+            
+              <ion-list>
+                  <ion-item>
+                      <ion-label> Target</ion-label>
+                      <ion-select   [required]="true" interface="popover" placeholder="Choose One" 
+                      formControlName="goal" (ionChange)="choose($event)">
+                        <ion-select-option *ngFor="let g of goals" value="{{g}}" >{{g}}</ion-select-option>
+                     
+                      
+                      </ion-select>
+                    
+                    
+          
+                  </ion-item>
+          
+                </ion-list>
+            
+        
+              
+                <ion-item *ngIf="PriceFlag">
+                  <ion-label>Price (only for sale) </ion-label>
+                <ion-input  type="number" formControlName="price"  #pricefield></ion-input>
+                </ion-item>
+        
+                <ion-item>
+                    <ion-col size="4"> <ion-label>Gender</ion-label>
+                    </ion-col>
+                     <ion-radio-group formControlName="gender"  [required]="true">
+                        
+                        <ion-list>
+                    
+                        <ion-item>
+                            <ion-radio  value="male"  ></ion-radio>
+                          <ion-label class="radio"> Male</ion-label>
+                         
+                        </ion-item>
+                        <ion-item>
+                            <ion-radio  value="female"  ></ion-radio>
+              
+                          <ion-label class="radio"> Female</ion-label>
+                        </ion-item>
+                    
+                    </ion-list>
+                    
+                      
+                      </ion-radio-group>
+                    </ion-item>
+                    
+            <ion-item>
+                <ion-col size="3"><ion-label>Note </ion-label></ion-col>   
+              <ion-textarea  formControlName="note" ></ion-textarea>
+            </ion-item>
+           
+         
+            
+             
+          
+        
+      
+              
+              
+           
+        
+      <ion-button type="submit"  [disabled]="!form.valid" color="dark" expand="block" > Add </ion-button>
+ 
+      
+  </form>
+
+ 
+  </ion-content>

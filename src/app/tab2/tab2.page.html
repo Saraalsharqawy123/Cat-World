@@ -1,9 +1,86 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Tab Two
-    </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button  (click)="AddCatModal()">     
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>   
+    </ion-buttons>
+
+    <ion-item *ngIf="currentUser">
+        <ion-avatar slot="start">      
+            <img *ngIf="currentUser.gender == 'female'" src="../../assets/girl2.jpg">
+            <img *ngIf="currentUser.gender == 'male'" src="../../assets/man.jpg">     
+        </ion-avatar>
+          <ion-label>
+            <h2 >{{currentUser.name}}</h2>
+          </ion-label>          
+    </ion-item>
+  
+      
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content  [scrollEvents]="true">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" [disabled]="false" pullFactor="0.5" pullMin="60" pullMax="90">
+        <ion-refresher-content pullingIcon="arrow-dropdown"
+        pullingText="Pull to refresh"
+        refreshingSpinner="android"
+        refreshingText="Refreshing...">
+      </ion-refresher-content>
+    </ion-refresher>
+ 
+
+    <ion-card *ngFor="let c of cats"> 
+      <ion-row *ngIf="c.status">
+        <ion-col style="background-color: lightgoldenrodyellow; font-weight: bolder;font-size: larger">
+          DONE
+        </ion-col>
+      </ion-row>       
+      <ion-row>
+        <ion-col size="6"> 
+            <ion-img  [src]="c.img"></ion-img>
+        </ion-col>
+        <ion-col> 
+        <input type="hidden" value={{c.Id}} #cId>
+        <ion-card-content style=" padding:0;">
+          <ion-row>      
+             <ion-col size="5">type:</ion-col>
+             <ion-col>{{c.type}}</ion-col>
+          </ion-row>
+          <ion-row>      
+              <ion-col size="5">sex:</ion-col>
+              <ion-col>{{c.gender}}</ion-col>
+          </ion-row>
+          <ion-row>       
+            <ion-col size="5">Age:</ion-col>             
+            <ion-col>{{c.age}}</ion-col>
+           </ion-row>
+           <ion-row>         
+              <ion-col size="5">For:</ion-col>                          
+              <ion-col>{{c.goal}} </ion-col>
+           </ion-row>
+           <ion-row *ngIf="c.goal == 'Sale'">         
+            <ion-col size="5">Price:</ion-col>                          
+            <ion-col>{{c.price}} </ion-col>
+           </ion-row>
+           <ion-row>         
+             <ion-col>{{c.note}}</ion-col>
+           </ion-row>
+           
+        </ion-card-content>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-float-right">
+          <ion-col><a title="interested"><span *ngIf="c.love">{{c.love}}</span><ion-icon name="md-heart" ></ion-icon> </a></ion-col>
+          <ion-col><ion-icon name="md-create" title="Edit" (click)="EditCatModal(c)"></ion-icon></ion-col>
+          <ion-col><ion-icon name="md-trash"  title="remove" (click)="presentAlertConfirm(c)"></ion-icon></ion-col>
+      </ion-row> 
+    </ion-card>
+     
+    <ion-card *ngIf="cats.length == 0">
+        <ion-card-content>
+          <h2> You can add your cats by using  <ion-icon name="add-circle-outline"></ion-icon>  icon in the toolbar  </h2>
+        </ion-card-content>
+      </ion-card>
+
+</ion-content>

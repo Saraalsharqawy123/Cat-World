@@ -1,1 +1,24 @@
+ion-content{
+    --ion-background-color: gainsboro;
+  }
+  
+  ion-card{
+    background-color: white;     
+    border-left:medium solid purple;
+  }
 
+
+a{
+    color:black;
+    text-decoration: none;
+}
+
+span{
+    font-weight: bold;
+    font-size: small;
+    vertical-align:text-top;
+}
+
+ion-icon{
+    color:dimgray;
+}

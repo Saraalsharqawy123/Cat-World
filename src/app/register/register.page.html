@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    
+      <ion-buttons slot="start">        
+            <ion-back-button></ion-back-button>
+      </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <form [formGroup]="form" (submit)="registerUser(form.value)">  
+      
+      <ion-item>           
+        <ion-icon slot="start" name="person"></ion-icon>      
+        <ion-input type="text" placeholder="Username" formControlName="name"  [required]="true"></ion-input>   
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="mail" slot="start"></ion-icon> 
+        <ion-input  placeholder="Email address" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})" formControlName="email"  [required]="true"></ion-input>
+      </ion-item>
+      
+      <span  *ngIf="msg">{{msg}}</span>
+      
+      <ion-item>        
+          <ion-icon name="key" slot="start"></ion-icon> 
+          <ion-input placeholder="Password" type="password"   formControlName="password"  [required]="true"></ion-input>
+      </ion-item>
+
+      <ion-list>
+          <ion-item>
+            <ion-icon name="globe" slot="start"></ion-icon>
+            <ion-select   [required]="true" interface="popover" placeholder="Select your country" 
+            formControlName="country" [(ngModel)]="country" (ionChange)="getCode(country)">
+              <ion-select-option *ngFor="let c of countries" value="{{c.country}}" >{{c.country}}</ion-select-option>
+            </ion-select> 
+          </ion-item>
+      </ion-list>
+    
+        
+      <ion-item>        
+          <ion-icon name="call" slot="start"></ion-icon>            
+          <ion-col size="4"><ion-input id="code" type="text" readonly  [required]="true" #p></ion-input>          
+          </ion-col>
+          <ion-col><ion-input   placeholder="Phone number" type="number"   formControlName="phone" pattern="^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$" [required]="true"></ion-input>
+          </ion-col>
+      </ion-item>
+     
+      <ion-list>
+        <ion-radio-group formControlName="gender"  [required]="true">
+          <ion-list-header>
+          <ion-label>Gender</ion-label>
+          </ion-list-header>
+        
+          <ion-item>
+          <ion-label>Female</ion-label>
+          <ion-radio slot="start" value="female" checked></ion-radio>
+          </ion-item>
+        
+          <ion-item>
+          <ion-label>Male</ion-label>
+          <ion-radio slot="start" value="male"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+      
+        
+      <ion-button type="submit" class="btn" [disabled]="!form.valid"  expand="block" >Sign up </ion-button>
+    </form>
+
+</ion-content>

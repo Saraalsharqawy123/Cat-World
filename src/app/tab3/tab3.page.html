@@ -1,9 +1,67 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="end">
+          <ion-button (click)="About()">
+            <ion-icon name="information-circle-outline" ></ion-icon>
+          </ion-button>
+         
+    </ion-buttons>
+ 
     <ion-title>
-      Tab Three
+      Profile
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+
+  <ion-card *ngIf="currentUser"  lines="none">
+    <ion-item>
+      <ion-label>{{currentUser.name}}</ion-label>
+      <ion-icon name="person" class="purple" slot="start"></ion-icon>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label>{{currentUser.address}}</ion-label>
+      <ion-icon slot="start" class="purple" name="pin"></ion-icon>      
+    </ion-item>
+    
+    <ion-item>
+      <ion-label>{{currentUser.phone}}</ion-label>
+      <ion-icon slot="start" name="md-phone-portrait" class="purple"></ion-icon>
+    </ion-item>
+    
+    <ion-item>
+      <ion-icon name="trophy" slot="start" class="purple"></ion-icon>
+      <ion-col class="ion-float-left" *ngIf="currentUser.Review">
+          {{currentUser.Review}}
+      <ion-icon name="star"></ion-icon>   
+      </ion-col>
+      <ion-col class="ion-float-right" size="5">
+          {{NumOfRate}} reviews
+      </ion-col>
+    </ion-item>
+  
+  </ion-card>
+
+  <ion-card>
+    <ion-item (click)="EditProfile()">
+      <ion-label>Edit Profile</ion-label>
+      <ion-icon slot="end" name="ios-arrow-forward"></ion-icon>
+    </ion-item>
+
+  
+    <ion-item (click)="EditPassword()">
+       <ion-label>Change Password ?</ion-label>
+       <ion-icon slot="end" name="ios-arrow-forward"></ion-icon>
+    </ion-item>
+        
+    <a (click)="Logout()"> 
+      <ion-item>
+        <ion-label>Logut</ion-label> 
+        <ion-icon slot="end" name="exit" color="medium"></ion-icon>
+      </ion-item>
+    </a>
+
+  </ion-card>
+</ion-content>

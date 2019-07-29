@@ -1,0 +1,60 @@
+<ion-header>
+    <ion-toolbar> 
+      <ion-buttons >
+          <ion-button slot="start" color="light" (click)="closeModal()">
+              <ion-icon name="arrow-back"></ion-icon>
+          </ion-button>
+          <ion-title>
+            Owner Profile
+          </ion-title>
+      </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+  
+  <ion-content>
+
+  <ion-card *ngIf="owner"  lines="none">
+      <ion-item>
+        <ion-label>{{owner.name}}</ion-label>
+        <ion-icon name="person" class="purple" slot="start"></ion-icon>
+      </ion-item>
+      
+      <ion-item>
+          <ion-label>{{owner.address}}</ion-label>
+          <ion-icon slot="start" class="purple" name="pin"></ion-icon>      
+      </ion-item>
+      
+      <ion-item>
+          <ion-label>{{owner.phone}}</ion-label>
+            <ion-icon name="call" color="primary"   (click)="callNow(owner.phone)"></ion-icon>
+            <ion-icon slot="start" name="md-phone-portrait" class="purple"></ion-icon>
+      </ion-item>
+      
+      <ion-item>
+        <ion-icon name="trophy" slot="start" class="purple"></ion-icon>
+        <ion-col class="ion-float-left" *ngIf="owner.Review">
+                  {{owner.Review}}
+         <ion-icon name="star"></ion-icon>  
+        </ion-col>
+         
+        <ion-col class="ion-float-right" size="5" color="medium">
+              {{NumOfRate}} reviews
+        </ion-col>
+      </ion-item>
+
+  </ion-card>
+
+  <ion-list *ngIf="owner.Id != currentUserId">
+      <ion-item>
+        <ion-label>Give Reviews</ion-label>
+      </ion-item>
+      <ion-item class="ion-text-center">
+        <ion-label>
+          <ion-icon name="star" *ngFor="let n of [1,2,3,4,5]" (click)="rate(n)" [ngStyle]="{'color':getColor(n)}">
+          </ion-icon>
+        </ion-label>
+      </ion-item> 
+  </ion-list>
+     
+  </ion-content>
+  

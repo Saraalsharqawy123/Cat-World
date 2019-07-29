@@ -1,5 +1,8 @@
 {
   "name": "helpme",
-  "integrations": {},
-  "type": "angular"
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular",
+  "id": "f0e41f79"
 }

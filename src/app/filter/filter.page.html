@@ -1,0 +1,87 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons >
+            <ion-button slot="start" color="dark" (click)="closeModal()">
+                <ion-icon name="arrow-back"></ion-icon>
+              </ion-button>
+             
+        </ion-buttons>
+       
+  
+    
+        
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content  [scrollEvents]="true">
+  
+      <ion-item-group>
+          <ion-item-divider>
+            <ion-label class="title">Types Of Cats</ion-label>
+          </ion-item-divider>
+          
+          <!-- types of cat -->
+          <a *ngFor="let t of types">
+<ion-col size="5">
+            <ion-chip  style="width:40%;" (click)="select($event,'type',t)">
+                <ion-label>{{t}}</ion-label>
+            </ion-chip>
+          </ion-col>
+          </a>
+       
+       
+            
+          <!-- Goal for cat -->      
+              <ion-item-divider>
+                  <ion-label class="title">Want Cat For</ion-label>
+                </ion-item-divider>
+
+                <ion-segment  (ionChange)="segmentChanged($event,'goal')">
+                  <ion-segment-button  *ngFor="let g of goals" value="{{g}}">
+                    <ion-label>{{g}}</ion-label>
+                 </ion-segment-button>
+                  </ion-segment>
+
+                  <!-- Price if goal is sale-->
+                  <div *ngIf="selectedGoal== 'Sale'">
+              <ion-item-divider>
+                  <ion-label class="title">Price Range </ion-label>
+                </ion-item-divider>
+
+                <ion-item>
+                  <ion-range  (ionChange)="segmentChanged($event,'price')" min="50" max="1000" pin="true" snaps="true" ticks="false">
+                    <ion-label slot="start">50</ion-label>
+                    <ion-label slot="end">1000</ion-label>
+                  </ion-range>
+                
+                </ion-item>
+              </div>
+              
+               <!--Gender if goal is marrige-->
+               <div *ngIf="selectedGoal == 'Marrige'">
+                <ion-item-divider>
+                    <ion-label class="title"> Gender </ion-label>
+                  </ion-item-divider>
+  <ion-radio-group>
+                  <ion-item (click)="select($event,'gender','male')">
+                    <ion-label>Male</ion-label>
+                    <ion-radio slot="start" value="male" ></ion-radio>
+                  </ion-item>
+              
+                  <ion-item (click)="select($event,'gender','female')">
+                    <ion-label>Female</ion-label>
+                    <ion-radio slot="start" value="female" ></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+                </div>
+              
+                
+        </ion-item-group>
+       
+        <ion-row class="ion-justify-content-center">
+        <ion-button class="btn"  shape="round" (click)="filter()" >
+            Apply filters
+          </ion-button>
+          </ion-row>
+  </ion-content>
+  

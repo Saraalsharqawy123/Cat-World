@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-button color="light" (click)="closeModal()">
+              <ion-icon name="arrow-back"></ion-icon>
+          </ion-button>
+      </ion-buttons>
+  <ion-title>Edit Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <form [formGroup]="form" (submit)="EditProfile(form.value)">  
+        <ion-input type="hidden" formControlName="Id"  ></ion-input>   
+        
+        <ion-item>           
+          <ion-icon slot="start" name="person"></ion-icon>         
+          <ion-input type="text" formControlName="name"  [required]="true"></ion-input>   
+        </ion-item>
+        
+        <ion-item>
+            <ion-icon slot="start" name="mail"></ion-icon>  
+            <ion-input   formControlName="email"  [required]="true" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+              <ion-icon name="globe" slot="start"></ion-icon>            
+              <ion-select   [required]="true" interface="popover" placeholder="Select your country" 
+                 formControlName="address"  >
+                <ion-select-option *ngFor="let c of countries" value="{{c.country}}" >{{c.country}}</ion-select-option>
+              </ion-select>
+        </ion-item>
+
+        <ion-item>        
+          <ion-icon name="call" slot="start"></ion-icon>            
+          <ion-col><ion-input style="padding-left: 0; padding-right: 0" pattern="^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$" placeholder="Phone number" type="string"   formControlName="phone"  [required]="true"></ion-input>
+          </ion-col>
+        </ion-item>
+        
+         
+        <ion-list>
+          <ion-radio-group formControlName="gender"  [required]="true">
+            <ion-list-header>
+              <ion-label>Gender</ion-label>
+            </ion-list-header>
+            
+            <ion-item>
+              <ion-label>Female</ion-label>
+              <ion-radio slot="start" value="female" checked></ion-radio>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label>Male</ion-label>
+              <ion-radio slot="start" value="male"></ion-radio>
+            </ion-item>
+            
+              
+          </ion-radio-group>
+        </ion-list>
+        
+        <ion-button type="submit" color="dark" [disabled]="!form.valid"  expand="block" >Edit </ion-button>
+     
+    </form>
+</ion-content>

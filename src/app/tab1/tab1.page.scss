@@ -1,4 +1,27 @@
-.welcome-card ion-img {
-  max-height: 35vh;
-  overflow: hidden;
+ion-content{
+  --ion-background-color: gainsboro;
+}
+
+ion-card{
+  --background: white;
+  border-left:medium solid purple;
+}
+
+
+ion-chip{
+  margin-left: 0%;
+  background-color:white;
+  color:purple;
+
+}
+.card_footer{
+  width: 100%;
+}
+
+.favourite{
+  padding-top: 5%;
+}
+
+span{
+  width: 3%;
 }

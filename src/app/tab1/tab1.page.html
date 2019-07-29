@@ -1,41 +1,108 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Tab One
-    </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button  (click)="OpenFilter()">        
+        <ion-icon name="funnel" ></ion-icon>
+      </ion-button> 
+    </ion-buttons>
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
   </ion-toolbar>
+
+  <ion-list *ngIf="searchitems.lenght != 0">
+    <ion-item *ngFor="let item of searchitems" (click)="ViewOwner(item.email)">
+      <ion-label>{{ item.name }} </ion-label>
+      <input type="hidden" value="item" />
+    </ion-item>
+  </ion-list>
+
 </ion-header>
 
-<ion-content>
-    <ion-card class="welcome-card">
-      <ion-img src="/assets/shapes.svg"></ion-img>
-      <ion-card-header>
-        <ion-card-subtitle>Get Started</ion-card-subtitle>
-        <ion-card-title>Welcome to Ionic</ion-card-title>
-      </ion-card-header>
+<ion-content  [scrollEvents]="true">
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" [disabled]="false" pullFactor="0.5" pullMin="60" pullMax="90">
+        <ion-refresher-content pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="android"
+          refreshingText="Refreshing...">
+        </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card *ngFor="let c of cats">
+
+      <input type="hidden" value={{c.Id}} #cId>
+      <ion-row>
+          <ion-col size="6"> 
+              <ion-img src={{c.img}}></ion-img>
+          </ion-col>
+          <ion-col> 
+              <input type="hidden" value={{c.Id}} #cId>
+                <ion-card-content style=" padding:0;">
+                  <ion-row>      
+                    <ion-col size="5">type:</ion-col>
+                    <ion-col>{{c.type}}</ion-col>
+                  </ion-row>
+                  <ion-row>      
+                    <ion-col size="5">sex:</ion-col>
+                    <ion-col>{{c.gender}}</ion-col>
+                  </ion-row>
+                  <ion-row>       
+                    <ion-col size="5">Age:</ion-col>             
+                    <ion-col>{{c.age}}</ion-col>
+                  </ion-row>
+                  <ion-row>         
+                    <ion-col size="5">For:</ion-col>                          
+                    <ion-col>{{c.goal}} </ion-col>
+                  </ion-row>
+                  <ion-row *ngIf="c.goal == 'Sale'">         
+                    <ion-col size="5">Price:</ion-col>                          
+                    <ion-col>{{c.price}} </ion-col>
+                  </ion-row>
+                  <ion-row>         
+                    <ion-col>{{c.note}}</ion-col>
+                  </ion-row>
+                </ion-card-content>
+          </ion-col>
+      </ion-row>
+
+      <ion-row class="card_footer" >
+          <ion-col size="10" no-padding>
+              <ion-chip (click)="ViewOwner(c.email)">
+                <ion-avatar>
+                  <img *ngIf="c.usergender == 'male'" src="../../assets/man.jpg">
+                  <img *ngIf="c.usergender == 'female'" src="../../assets/girl2.jpg">
+                 </ion-avatar>
+                 <ion-label>{{c.name}}</ion-label>
+              </ion-chip>
+          </ion-col>
+          <ion-col  class="favourite" *ngIf="c.f; else notf" size="2" >
+            <span >
+              {{c.love? c.love : "&nbsp;&nbsp;"}} <ion-icon (click)="updatelove($event,c.Id,c.love)" title="interested" name="heart" ></ion-icon>
+            </span>
+          </ion-col>
+             
+          <ng-template #notf >
+            <ion-col class="favourite" size="2">
+            <span>
+              {{c.love? c.love : "&nbsp;&nbsp;"}} <ion-icon (click)="updatelove($event,c.Id,c.love)" title="interested" name="heart-empty" ></ion-icon> 
+            </span>
+            </ion-col>
+          </ng-template>
+            
+      </ion-row>
+   
+  </ion-card>
+
+  <div *ngIf="cats">
+    <ion-card *ngIf="cats.length == 0">
       <ion-card-content>
-        <p>Now that your app has been created, you'll want to start building out features and components. Check out some of the resources below for next steps.</p>
+        <ion-img src="../../assets/Oh.png"> </ion-img>
+        <h2>{{msg}} </h2>
+        <h5>Drag down to refresh</h5>
       </ion-card-content>
     </ion-card>
-    <ion-list lines="none">
-      <ion-list-header>
-        <ion-label>Resources</ion-label>
-      </ion-list-header>
-      <ion-item href="https://ionicframework.com/docs/">
-        <ion-icon slot="start" color="medium" name="book"></ion-icon>
-        <ion-label>Ionic Documentation</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/building/scaffolding">
-        <ion-icon slot="start" color="medium" name="build"></ion-icon>
-        <ion-label>Scaffold Out Your App</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/layout/structure">
-        <ion-icon slot="start" color="medium" name="grid"></ion-icon>
-        <ion-label>Change Your App Layout</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/theming/basics">
-        <ion-icon slot="start" color="medium" name="color-fill"></ion-icon>
-        <ion-label>Theme Your App</ion-label>
-      </ion-item>
-    </ion-list>
+  </div>
+  
+  <ion-button class="btn" *ngIf="Cancelfilterbtn"  expand="block" (click)="Cancelfilter()">Cancel filter</ion-button>
+  
 </ion-content>
+
